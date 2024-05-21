@@ -29,10 +29,15 @@ def main():
     
     # print(f" Ha escogido opción: {input_string}")
     input_string = input("Por favor, introduzca la acción que desear realizar:\n [1]Añadir nueva tarea.\n [2]Modificar tarea.\n [3]Borrar Tarea.\n")
+    manager = TaskManager()
+    task_id = 0
     
     while input_string:
         if (input_string == '1'):
-            name = input("Por favor, introduzca el nombre de la tarea: ")
+            task_name = input("Por favor, introduzca la tarea: ")
+            # Create an instance of TaskManager
+            manager.add_task(task_id, task_name)
+            print(f'La tarea {manager.pending_tasks[task_id]} ha sido añadida')
         
         elif (input_string == '2'):
             name = input("¿Qué tarea desea modificar?\n")
