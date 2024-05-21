@@ -32,21 +32,33 @@ def main():
     manager = TaskManager()
     task_id = 0
     
-    while input_string:
+    while True:
         if (input_string == '1'):
+            
             task_name = input("Por favor, introduzca la tarea: ")
-            # Create an instance of TaskManager
+            # Crea nueva tarea
             manager.add_task(task_id, task_name)
-            print(f'La tarea {manager.pending_tasks[task_id]} ha sido añadida')
-        
+            print(f'La tarea {manager.pending_tasks[task_id]} ha sido añadida.\n')
+            
+            # Print all tasks in pending_tasks
+            contador = 1
+            print("La lista de tareas pendientes es la siguiente:|n")
+            for id, description in manager.pending_tasks.items():
+                print(f'{contador}. {description}')
+                contador +=1
+            print("\n")
+
+            task_id += 1
+            input_string = 0
+                    
         elif (input_string == '2'):
             name = input("¿Qué tarea desea modificar?\n")
         
         elif (input_string == '3'):
             name = input("¿Qué tarea desea borrar?\n")
-            
+        
         else:
-            input_string = False
+            input_string = input("Por favor, que desear realizar a continuación:\n [1]Añadir una nueva tarea.\n [2]Modificar una tarea pendiente.\n [3]Borrar una tarea.\n")
     
 
 
