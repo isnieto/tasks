@@ -1,7 +1,7 @@
 class TaskManager:
     def __init__(self):
         self.tareas_pendientes = {}
-        self.tareas_hechas = {}
+        self.tareas_finalizadas = {}
         self.tareas_borradas = {}
         self.tarea_id = 0
 
@@ -57,11 +57,24 @@ class TaskManager:
             counter +=1
         print("\n")
         return tasks_list
+    
+    def visualizar_tareas(self):
+        if not self.tareas_pendientes and not self.tareas_finalizadas:
+            print('No hay tareas para visualizar.')
+        else:
+            if self.tareas_pendientes:
+                print('Tareas pendientes:')
+                for tarea in self.tareas_pendientes:
+                    print(f' - {tarea}')
+            if self.tareas_finalizadas:
+                print('Tareas finalizadas:')
+                for tarea in self.tareas_finalizadas:
+                    print(f' - {tarea}')
 
-def handle_input(manager):
+def procesar_input(manager):
     
     while True:
-        input_string = input("Por favor, introduzca la acción que desear realizar:\n\n [1]Añadir nueva tarea\n [2]Modificar tarea\n [3]Borrar tarea\n [4]Finalizar tarea\n [5]Abandonar el Taskmanager ")
+        input_string = input("Por favor, introduzca la acción que desea realizar:\n\n [1]Añadir nueva tarea\n [2]Modificar tarea\n [3]Borrar tarea\n [4]Finalizar tarea\n [5]Visualizar tareas\n [6]Abandonar el Taskmanager\n")
         if (input_string == '1'):
             manager.crear_tarea()
         elif (input_string == '2'):
@@ -71,14 +84,16 @@ def handle_input(manager):
         elif (input_string == '4'):
             manager.finalizar_tarea()
         elif (input_string == '5'):
+            manager.visualizar_tareas()
+        elif (input_string == '6'):
             print("Saliendo de la aplicación." )
             break
         else:
-            input_string = input("Por favor, que desear realizar a continuación:\n\n [1]Añadir una nueva tarea\n [2]Modificar una tarea pendiente.\n [3]Borrar una tarea\n [4]Finalizar tarea\n [5]Abandonar el Taskmanager ")
-
+            input_string = input("Por favor, que desea realizar a continuación:\n\n [1]Añadir una nueva tarea\n [2]Modificar una tarea pendiente.\n [3]Borrar una tarea\n [4]Finalizar tarea\n [5]Visualizar tareas\n [6]Abandonar el Taskmanager\n ")
+   
 def main():
     manager = TaskManager()
-    handle_input(manager)
+    procesar_input(manager)
 
 if __name__ == "__main__":
     main()
