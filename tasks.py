@@ -9,12 +9,12 @@ class TaskManager:
         task_name = input("Por favor, introduzca la tarea: ")
         self.tareas_pendientes[self.tarea_id] = task_name
         print(f'La tarea "{self.tareas_pendientes[self.tarea_id]}" ha sido añadida.\n')
-        self.display_tasks()
+        self.print_tareas()
         self.tarea_id += 1
 
     def modificar_tarea(self):
         print("¿Qué tarea desea modificar?\n")
-        tasks_list = self.display_tasks()
+        tasks_list = self.print_tareas()
         opcion = int(input("Elija el número: \n"))
         if opcion in tasks_list:
             self.tareas_pendientes[tasks_list[opcion]] = input("Por favor, introduzca la nueva descripción: ")
@@ -23,7 +23,7 @@ class TaskManager:
 
     def borrar_tarea(self):
         print("¿Qué tarea desea borrar?\n")
-        tasks_list = self.display_tasks()
+        tasks_list = self.print_tareas()
         opcion = int(input("Elija el número: \n"))
         if opcion in tasks_list:
             self.tareas_borradas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
@@ -32,14 +32,14 @@ class TaskManager:
 
     def finalizar_tarea(self):
         print("¿Qué tarea ha sido finalizada?\n")
-        tasks_list = self.display_tasks()
+        tasks_list = self.print_tareas()
         opcion = int(input("Elija el número: \n"))
         if opcion in tasks_list:
             self.tareas_hechas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
         else:
             print("Invalid option")
 
-    def display_tasks(self):
+    def print_tareas(self):
         counter = 1
         tasks_list = {}
         for id, description in self.tareas_pendientes.items():
