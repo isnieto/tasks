@@ -16,7 +16,7 @@ class TaskManager:
 
     def modificar_tarea(self):
         if not self.tareas_pendientes:
-            print("\nLista vacia")
+            print("\n¡Lista vacia!\n")
         else:
             print("\n¿Qué tarea desea modificar?\n")
             tasks_list = self.print_tareas()
@@ -34,7 +34,7 @@ class TaskManager:
     def borrar_tarea(self):
         
         if not self.tareas_pendientes:
-            print("\nLista vacia\n")
+            print("\n¡Lista vacia!\n")
         else:
             print("\n¿Qué tarea desea borrar?\n")
             tasks_list = self.print_tareas()
@@ -51,7 +51,7 @@ class TaskManager:
 
     def finalizar_tarea(self):
         if not self.tareas_pendientes:
-            print("\nLista vacia")
+            print("\n¡Lista vacia!\n")
         else:
             print("\n¿Qué tarea ha sido finalizada?\n")
             tasks_list = self.print_tareas()
@@ -75,23 +75,27 @@ class TaskManager:
     
     def visualizar_tareas(self):
         if not self.tareas_pendientes and not self.tareas_finalizadas:
-            print('\nNo hay tareas para visualizar.')
+            print('\n¡Lista vacia!')
         else:
             if self.tareas_pendientes:
-                print('Tareas pendientes:')
-                for tarea_id, tarea_desc in self.tareas_pendientes.items():
-                    print(f' - {tarea_desc}')
+                counter = 1
+                print('\nTareas pendientes:')
+                for tarea_desc in self.tareas_pendientes.items():
+                    print(f'{counter} - {tarea_desc[1]}')
+                    counter +=1
             if self.tareas_finalizadas:
+                counter = 1
                 print('\nTareas finalizadas:')
-                for tarea_id, tarea_desc in self.tareas_finalizadas.items():
-                    print(f' - {tarea_desc}')
-        print("\n\n")           
+                for tarea_desc in self.tareas_finalizadas.items():
+                    print(f'{counter} - {tarea_desc[1]}')
+                    counter +=1
+        print("\n")           
                 
                 
 def procesar_input(manager):
     
     while True:
-        input_string = input("Por favor, introduzca la acción que desea realizar:\n\n [1]Añadir nueva tarea\n [2]Modificar tarea\n [3]Borrar tarea\n [4]Finalizar tarea\n [5]Visualizar tareas\n [6]Abandonar el Taskmanager\n\n Introducir opción: ")
+        input_string = input("Por favor, seleccione la acción que desea realizar:\n\n [1]Añadir nueva tarea\n [2]Modificar tarea\n [3]Borrar tarea\n [4]Finalizar tarea\n [5]Visualizar tareas\n [6]Abandonar el Taskmanager\n\n Introducir opción: ")
         if (input_string == '1'):
             manager.crear_tarea()
         elif (input_string == '2'):
@@ -106,7 +110,8 @@ def procesar_input(manager):
             print("Saliendo de la aplicación." )
             break
         else:
-            input_string = input("Por favor, que desea realizar a continuación:\n\n [1]Añadir una nueva tarea\n [2]Modificar una tarea pendiente.\n [3]Borrar una tarea\n [4]Finalizar tarea\n [5]Visualizar tareas\n [6]Abandonar el Taskmanager\n\nIntroducir opción:6 ")
+            print("\nPor favor, introduzca una opción válida.")
+            #input_string = input("Elija un número:\n\n [1]Añadir una nueva tarea\n [2]Modificar una tarea pendiente.\n [3]Borrar una tarea\n [4]Finalizar tarea\n [5]Visualizar tareas\n [6]Abandonar el Taskmanager\n\nIntroducir opción: ")
    
 def main():
     manager = TaskManager()
