@@ -20,47 +20,60 @@ class TaskManager:
         else:
             print("\n¿Qué tarea desea modificar?\n")
             tasks_list = self.print_tareas()
-            option = input("\nElija un número (o 'exit' para salir): ")
-            if option.lower() == 'exit':
-                print("Operación cancelada.\n")
-                return
-            opcion = int(option)
-            if opcion in tasks_list:
-                self.tareas_pendientes[tasks_list[opcion]] = input("Por favor, introduzca la nueva descripción: ")
-            else:
-                print("\nOpción invalida.\n")
-            print(f'\nLa tarea ha sido modificada: "{self.tareas_pendientes[tasks_list[opcion]]}" .\n')
+            while True:
+                option = input("\nElija un número (o 'exit' para salir): ")
+                if option.lower() == 'exit':
+                    print("Operación cancelada.\n")
+                    return
+                elif option.isdigit() and int(option) in tasks_list:
+                    opcion = int(option)
+                    self.tareas_pendientes[tasks_list[opcion]] = input("Por favor, introduzca la nueva descripción: ")
+                    print(f'\nLa tarea ha sido modificada: "{self.tareas_pendientes[tasks_list[opcion]]}" .\n')
+                    break
+                else:
+                    print("\nOpción invalida. Por favor, seleccione un número") 
+            
+            
             
     def borrar_tarea(self):
-        
         if not self.tareas_pendientes:
             print("\n¡Lista vacia!\n")
         else:
             print("\n¿Qué tarea desea borrar?\n")
             tasks_list = self.print_tareas()
-            option = input("\nElija un número (o 'exit' para salir): ")
-            if option.lower() == 'exit':
-                print("Operación cancelada.\n")
-                return
-            opcion = int(option)
-            if opcion in tasks_list:
-                self.tareas_borradas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
-            else:
-                print("\nOpción invalida. Por favor, selectione un número")
-            print(f'\nLa tarea eliminada .\n')
+            while True:
+                option = input("\nElija un número (o 'exit' para salir): ")
+                if option.lower() == 'exit':
+                    print("Operación cancelada.\n")
+                    return
+                elif option.isdigit() and int(option) in tasks_list:
+                    opcion = int(option)
+                    self.tareas_borradas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
+                    print(f'\nLa tarea ha sido eliminada.\n')
+                    break
+                else:
+                    print("\nOpción invalida. Por favor, seleccione un número")
+            
+            
 
     def finalizar_tarea(self):
         if not self.tareas_pendientes:
             print("\n¡Lista vacia!\n")
         else:
-            print("\n¿Qué tarea ha sido finalizada?\n")
+            print("\n¿Qué tarea desea completar?")
             tasks_list = self.print_tareas()
-            opcion = int(input("\nElija el número: "))
-            if opcion in tasks_list:
-                self.tareas_finalizadas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
-                print(f'\nLa tarea ha sido modificada: "{self.tareas_finalizadas[tasks_list[opcion]]}" .\n')
-            else:
-                print("\nOpción invalida. Por favor, selectione un número")
+            while True:
+                option = input("\nElija un número (o 'exit' para salir): ")
+                if option.lower() == 'exit':
+                    print("Operación cancelada.\n")
+                    return
+                elif option.isdigit() and int(option) in tasks_list:
+                    opcion = int(option)
+                    self.tareas_finalizadas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
+                    print(f'\nLa tarea ha sido modificada: "{self.tareas_finalizadas[tasks_list[opcion]]}" .\n')
+                    break
+                else:
+                    print("\nOpción invalida. Por favor, seleccione un número")
 
     def print_tareas(self):
         counter = 1
