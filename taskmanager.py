@@ -18,75 +18,59 @@ class TaskManager:
         print(f'\nLa tarea "{self.tareas_pendientes[self.tarea_id]}" ha sido añadida.\n')
         self.tarea_id += 1
 
-    def modificar_tarea(self):
-        """Solicita al usuario modificar una tarea pendiente existente."""
+    def seleccionar_tarea(self, accion):
+        """Solicita al usuario seleccionar una tarea pendiente existente para una acción específica.
+
+        Args:
+            accion (str): La acción a realizar con la tarea seleccionada ('modificar', 'borrar', 'finalizar').
+
+        Returns:
+            int: El ID de la tarea seleccionada, o None si la operación fue cancelada.
+        """
         if not self.tareas_pendientes:
             print("\n¡Lista vacía!\n")
+            return None
         else:
-            print("\n¿Qué tarea desea modificar?")
+            print(f"\n¿Qué tarea desea {accion}?")
             tasks_list = self.print_tareas()
             while True:
-                option = input("\nElija un número (o 'exit' para salir): ")
+                option = input(f"\nElija un número para {accion} la tarea (o 'exit' para salir): ")
                 if option.lower() == 'exit':
                     print("Operación cancelada.\n")
-                    return
+                    return None
                 elif option.isdigit() and int(option) in tasks_list:
-                    opcion = int(option)
-                    self.tareas_pendientes[tasks_list[opcion]] = input("Por favor, introduzca la nueva descripción: ")
-                    print(f'\nLa tarea ha sido modificada: "{self.tareas_pendientes[tasks_list[opcion]]}" .\n')
-                    break
+                    return tasks_list[int(option)]
                 else:
-                    print("\nOpción inválida. Seleccione una opción válida.") 
+                    print("\nOpción inválida. Seleccione una opción válida.")
+
+    def modificar_tarea(self):
+        """Solicita al usuario modificar una tarea pendiente existente."""
+        tarea_id = self.seleccionar_tarea('modificar')
+        if tarea_id is not None:
+            self.tareas_pendientes[tarea_id] = input("Por favor, introduzca la nueva descripción: ")
+            print(f'\nLa tarea ha sido modificada: "{self.tareas_pendientes[tarea_id]}" .\n')
 
     def borrar_tarea(self):
         """Solicita al usuario borrar una tarea pendiente existente."""
-        if not self.tareas_pendientes:
-            print("\n¡Lista vacía!\n")
-        else:
-            print("\n¿Qué tarea desea borrar?\n")
-            tasks_list = self.print_tareas()
-            while True:
-                option = input("\nElija un número (o 'exit' para salir): ")
-                if option.lower() == 'exit':
-                    print("Operación cancelada.\n")
-                    return
-                elif option.isdigit() and int(option) in tasks_list:
-                    opcion = int(option)
-                    self.tareas_borradas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
-                    print(f'\nLa tarea ha sido eliminada.\n')
-                    break
-                else:
-                    print("\nOpción inválida. Seleccione una opción válida.")
+        tarea_id = self.seleccionar_tarea('borrar')
+        if tarea_id is not None:
+            self.tareas_borradas[tarea_id] = self.tareas_pendientes.pop(tarea_id)
+            print(f'\nLa tarea ha sido eliminada.\n')
 
     def finalizar_tarea(self):
         """Solicita al usuario marcar una tarea pendiente existente como finalizada."""
-        if not self.tareas_pendientes:
-            print("\n¡Lista vacía!\n")
-        else:
-            print("\n¿Qué tarea desea completar?")
-            tasks_list = self.print_tareas()
-            while True:
-                option = input("\nElija un número (o 'exit' para salir): ")
-                if option.lower() == 'exit':
-                    print("Operación cancelada.\n")
-                    return
-                elif option.isdigit() and int(option) in tasks_list:
-                    opcion = int(option)
-                    self.tareas_finalizadas[tasks_list[opcion]] = self.tareas_pendientes.pop(tasks_list[opcion])
-                    print(f'\nLa tarea ha sido completada: "{self.tareas_finalizadas[tasks_list[opcion]]}" .\n')
-                    break
-                else:
-                    print("\nOpción inválida. Seleccione una opción válida.")
+        tarea_id = self.seleccionar_tarea('finalizar')
+        if tarea_id is not None:
+            self.tareas_finalizadas[tarea_id] = self.tareas_pendientes.pop(tarea_id)
+            print(f'\nLa tarea ha sido completada: "{self.tareas_finalizadas[tarea_id]}" .\n')
 
     def print_tareas(self):
         """Imprime y devuelve un diccionario de tareas pendientes con un índice numérico."""
-        counter = 1
         tasks_list = {}
         print("\n")
-        for id, description in self.tareas_pendientes.items():
+        for counter, (id, description) in enumerate(self.tareas_pendientes.items(), 1):
             print(f'{counter}. {description}')
             tasks_list[counter] = id
-            counter += 1
         print("\n")
         return tasks_list
     
@@ -96,17 +80,13 @@ class TaskManager:
             print('\n¡Lista vacía!')
         else:
             if self.tareas_pendientes:
-                counter = 1
                 print('\nTareas pendientes:')
-                for tarea_desc in self.tareas_pendientes.items():
+                for counter, tarea_desc in enumerate(self.tareas_pendientes.items(), 1):
                     print(f'{counter} - {tarea_desc[1]}')
-                    counter += 1
             if self.tareas_finalizadas:
-                counter = 1
                 print('\nTareas finalizadas:')
-                for tarea_desc in self.tareas_finalizadas.items():
+                for counter, tarea_desc in enumerate(self.tareas_finalizadas.items(), 1):
                     print(f'{counter} - {tarea_desc[1]}')
-                    counter += 1
         print("\n")           
 
 def procesar_input(manager):
